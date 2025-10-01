@@ -1,7 +1,9 @@
 package ru.yandex.practicum.filmorate.service.film;
 
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.messages.ValidationExceptionMessages;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
@@ -20,5 +22,16 @@ public class FilmService {
 
     public List<Film> getAll() {
         return filmStorage.getAll();
+    }
+    public Film save(Film film) {
+        validate(film);
+        return filmStorage.save(film);
+    }
+
+    public Film validate(Film film) {
+        if (film.getReleaseDate().isBefore(BOUNDARY_DATE)) {
+            throw new ValidationException(ValidationExceptionMessages.RELEASE_DATE.toString());
+        }
+        return film;
     }
 }

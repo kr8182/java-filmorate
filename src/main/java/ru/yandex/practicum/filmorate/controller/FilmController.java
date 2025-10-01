@@ -1,11 +1,10 @@
-package ru.yandex.practicum.filmorate.controllers;
+package ru.yandex.practicum.filmorate.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.film.FilmService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,3 +21,4 @@ public class FilmController {
     public List<Film> getAll() {
         return filmService.getAll();
     }
+}
