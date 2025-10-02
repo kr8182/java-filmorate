@@ -35,4 +35,9 @@ public class FilmService {
         }
         return film;
     }
+
+    public Film update(Film film) {
+        validate(film);
+        return filmStorage.update(film);
+    }
 }
