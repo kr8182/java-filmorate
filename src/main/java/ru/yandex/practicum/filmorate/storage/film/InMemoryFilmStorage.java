@@ -36,5 +36,14 @@ public class InMemoryFilmStorage implements FilmStorage {
         return film;
     }
 
-
+    @Override
+    public Film update(Film film) {
+        log.info(String.valueOf(LogMessages.TRY_UPDATE), film);
+        if (!films.containsKey(film.getId())) {
+            throw new NotFoundException(String.valueOf(LogMessages.MISSING));
+        }
+        films.replace(film.getId(), film);
+        log.info(String.valueOf(LogMessages.UPDATE));
+        return film;
+    }
 }

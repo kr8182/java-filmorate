@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class FilmService {
-    private final FilmStorage filmStorage;
     private static final LocalDate BOUNDARY_DATE = LocalDate.of(1895, 12, 28);
+    private final FilmStorage filmStorage;
 
     public FilmService(FilmStorage filmStorage) {
         this.filmStorage = filmStorage;
@@ -23,6 +23,7 @@ public class FilmService {
     public List<Film> getAll() {
         return filmStorage.getAll();
     }
+
     public Film save(Film film) {
         validate(film);
         return filmStorage.save(film);
