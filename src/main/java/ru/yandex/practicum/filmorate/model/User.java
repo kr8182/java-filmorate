@@ -21,6 +21,6 @@ public class User {
     @Pattern(regexp = ".*\\S.", message = ExceptionMessages.LOGIN_WITHOUT_SPACE)
     String login; //логин пользователя
     String name; //имя пользователя
-    @Past(message = ExceptionMessages.INCORRECT_BIRTHDAY)
+    @PastOrPresent(message = ExceptionMessages.INCORRECT_BIRTHDAY)
     LocalDate birthday; //День рождения
 }
