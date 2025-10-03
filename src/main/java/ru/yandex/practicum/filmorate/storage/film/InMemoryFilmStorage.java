@@ -21,12 +21,14 @@ public class InMemoryFilmStorage implements FilmStorage {
         return id++;
     }
 
+    /*Метод получения полного списка фильмов*/
     @Override
     public List<Film> getAll() {
         log.info(String.valueOf(LogMessages.COUNT), films.size());
         return new ArrayList<>(films.values());
     }
 
+    /*Метод сохранения нового фильма*/
     @Override
     public Film save(Film film) {
         log.info(String.valueOf(LogMessages.TRY_ADD), film);
@@ -36,6 +38,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return film;
     }
 
+    /*Метод обновления фильма*/
     @Override
     public Film update(Film film) {
         log.info(String.valueOf(LogMessages.TRY_UPDATE), film);

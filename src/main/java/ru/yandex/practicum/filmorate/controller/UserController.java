@@ -1,10 +1,9 @@
-package ru.yandex.practicum.filmorate.controllers;
+package ru.yandex.practicum.filmorate.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.user.UserService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,12 +21,12 @@ public class UserController {
     }
 
     @PostMapping
-    public User save(@Valid @RequestBody User user) {
+    public User save(@RequestBody User user) {
         return userService.save(user);
     }
 
     @PutMapping
-    public User update(@Valid @RequestBody User user) {
+    public User update(@RequestBody User user) {
         return userService.update(user);
     }
 }
