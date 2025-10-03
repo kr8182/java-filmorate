@@ -1,9 +1,6 @@
 package ru.yandex.practicum.filmorate.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -24,6 +21,6 @@ public class User {
     @Pattern(regexp = ".*\\S.", message = ExceptionMessages.LOGIN_WITHOUT_SPACE)
     String login; //логин пользователя
     String name; //имя пользователя
-    @PastOrPresent(message = ExceptionMessages.INCORRECT_BIRTHDAY)
+    @Past(message = ExceptionMessages.INCORRECT_BIRTHDAY)
     LocalDate birthday; //День рождения
 }
