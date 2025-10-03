@@ -14,12 +14,12 @@ import java.util.List;
 public class UserService {
     private final UserStorage userStorage;
 
-    public List<User> getAll() {
-        return userStorage.getAll();
-    }
-
     public UserService(UserStorage userStorage) {
         this.userStorage = userStorage;
+    }
+
+    public List<User> getAll() {
+        return userStorage.getAll();
     }
 
     public User save(User user) {
