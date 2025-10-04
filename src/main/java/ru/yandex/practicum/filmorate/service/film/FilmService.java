@@ -29,15 +29,14 @@ public class FilmService {
         return filmStorage.save(film);
     }
 
-    public Film validate(Film film) {
-        if (film.getReleaseDate().isBefore(BOUNDARY_DATE)) {
-            throw new ValidationException(ValidationExceptionMessages.RELEASE_DATE.toString());
-        }
-        return film;
-    }
-
     public Film update(Film film) {
         validate(film);
         return filmStorage.update(film);
+    }
+
+    private void validate(Film film) {
+        if (film.getReleaseDate().isBefore(BOUNDARY_DATE)) {
+            throw new ValidationException(ValidationExceptionMessages.RELEASE_DATE.toString());
+        }
     }
 }

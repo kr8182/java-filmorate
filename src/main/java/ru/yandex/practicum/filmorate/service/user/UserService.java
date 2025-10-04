@@ -32,7 +32,7 @@ public class UserService {
         return userStorage.update(user);
     }
 
-    public void validate(User user) throws ValidationException {
+    private void validate(User user) throws ValidationException {
         if (user.getName() == null || user.getName().isBlank()) {
             log.info(ValidationExceptionMessages.LOGIN_TO_NAME.toString());
             user.setName(user.getLogin());

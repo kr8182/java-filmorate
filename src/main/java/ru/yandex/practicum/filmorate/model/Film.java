@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Builder
 public class Film {
 
-    int id; //целочисленный идентификатор
+    public int id; //целочисленный идентификатор
     @NotBlank(message = ExceptionMessages.EMPTY_NAME)
     String name; //Наименование
     @Size(max = 200, message = ExceptionMessages.MAX_DESCRIPTION)
