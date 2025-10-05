@@ -17,10 +17,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> films = new HashMap<>();
     private int id = 1;
 
-    private int generateId() {
-        return id++;
-    }
-
     /*Метод получения полного списка фильмов*/
     @Override
     public List<Film> getAll() {
@@ -48,5 +44,9 @@ public class InMemoryFilmStorage implements FilmStorage {
         films.replace(film.getId(), film);
         log.info(String.valueOf(LogMessages.UPDATE));
         return film;
+    }
+
+    private int generateId() {
+        return id++;
     }
 }

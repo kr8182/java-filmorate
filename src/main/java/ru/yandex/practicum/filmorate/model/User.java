@@ -14,13 +14,13 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class User {
-    int id; //целочисленный идентификатор
+    private int id; //целочисленный идентификатор
     @Email(message = ExceptionMessages.INCORRECT_EMAIL)
-    String email; //электронная почта пользователя
+    private String email; //электронная почта пользователя
     @NotBlank(message = ExceptionMessages.EMPTY_LOGIN)
     @Pattern(regexp = ".*\\S.", message = ExceptionMessages.LOGIN_WITHOUT_SPACE)
-    String login; //логин пользователя
-    String name; //имя пользователя
+    private String login; //логин пользователя
+    private String name; //имя пользователя
     @PastOrPresent(message = ExceptionMessages.INCORRECT_BIRTHDAY)
-    LocalDate birthday; //День рождения
+    private LocalDate birthday; //День рождения
 }

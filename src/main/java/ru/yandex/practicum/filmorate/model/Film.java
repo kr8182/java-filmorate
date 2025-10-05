@@ -20,13 +20,13 @@ import java.time.LocalDate;
 @Builder
 public class Film {
 
-    public int id; //целочисленный идентификатор
+    private int id; //целочисленный идентификатор
     @NotBlank(message = ExceptionMessages.EMPTY_NAME)
-    String name; //Наименование
+    private String name; //Наименование
     @Size(max = 200, message = ExceptionMessages.MAX_DESCRIPTION)
-    String description; //описание
-    LocalDate releaseDate; //Релизная дата
+    private String description; //описание
+    private LocalDate releaseDate; //Релизная дата
     @PositiveOrZero(message = ExceptionMessages.POSITIVE_DURATION)
-    int duration; //Длительность
+    private int duration; //Длительность
 
 }
