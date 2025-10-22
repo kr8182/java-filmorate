@@ -21,10 +21,6 @@ public class UserService extends AbstractService<User> {
         super.storage = storage;
     }
 
-    private boolean checkFriendToFriend(int userId, int friendId) {
-        return userId == friendId;
-    }
-
     @Override
     public User validate(User user) throws ValidationException {
         if (user.getName() == null || user.getName().isBlank()) {
@@ -76,5 +72,9 @@ public class UserService extends AbstractService<User> {
 
         log.info(String.valueOf(LogMessages.LIST_OF_FRIENDS));
         return mutualFriends;
+    }
+
+    private boolean checkFriendToFriend(int userId, int friendId) {
+        return userId == friendId;
     }
 }
