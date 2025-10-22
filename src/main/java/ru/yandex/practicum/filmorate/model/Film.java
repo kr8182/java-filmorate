@@ -27,5 +27,5 @@ public class Film extends Entity {
     private String description;
     private LocalDate releaseDate;
     @PositiveOrZero(message = ExceptionMessages.POSITIVE_DURATION)
-    private int duration;
+    private long duration;
 }
