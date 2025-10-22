@@ -17,7 +17,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Film extends  Entity {
+public class Film extends Entity {
+    @JsonIgnore
+    private final Set<Integer> likes = new HashSet<>();
     private int id;
     @NotBlank(message = ExceptionMessages.EMPTY_NAME)
     private String name;
@@ -26,6 +28,4 @@ public class Film extends  Entity {
     private LocalDate releaseDate;
     @PositiveOrZero(message = ExceptionMessages.POSITIVE_DURATION)
     private long duration;
-    @JsonIgnore
-    private final Set<Integer> likes = new HashSet<>();
 }

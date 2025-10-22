@@ -18,7 +18,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User extends Entity{
+public class User extends Entity {
+    @JsonIgnore
+    private final Set<Integer> friends = new HashSet<>();
     private int id;
     @Email(message = ExceptionMessages.INCORRECT_EMAIL)
     private String email;
@@ -28,6 +30,4 @@ public class User extends Entity{
     private String name;
     @PastOrPresent(message = ExceptionMessages.INCORRECT_BIRTHDAY)
     private LocalDate birthday;
-    @JsonIgnore
-    private final Set<Integer> friends = new HashSet<>();
 }
