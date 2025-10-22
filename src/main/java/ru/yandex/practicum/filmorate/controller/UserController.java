@@ -25,15 +25,17 @@ public class UserController {
         return userService.getAll();
     }
 
-    @Valid
+
     @PostMapping
+    @Valid
     public User save(@RequestBody User user) {
         log.debug(String.valueOf(LogMessages.TRY_ADD), user);
         return userService.save(user);
     }
 
-    @Valid
+
     @PutMapping
+    @Valid
     public User update(@RequestBody User user) {
         log.debug(String.valueOf(LogMessages.TRY_UPDATE), user);
         return userService.update(user);

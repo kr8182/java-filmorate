@@ -25,15 +25,17 @@ public class FilmController {
         return filmService.getAll();
     }
 
-    @Valid
+
     @PostMapping
+    @Valid
     public Film save(@RequestBody Film film) {
         log.debug(String.valueOf(LogMessages.TRY_ADD), film);
         return filmService.save(film);
     }
 
-    @Valid
+
     @PutMapping
+    @Valid
     public Film update(@RequestBody Film film) {
         log.debug(String.valueOf(LogMessages.TRY_UPDATE), film);
         return filmService.update(film);
