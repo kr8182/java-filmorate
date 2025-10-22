@@ -1,32 +1,31 @@
 package ru.yandex.practicum.filmorate.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import ru.yandex.practicum.filmorate.messages.ExceptionMessages;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Film.
- */
-@Data
 @Getter
 @Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Film {
-
-    private int id; //целочисленный идентификатор
+public class Film extends  Entity {
+    private int id;
     @NotBlank(message = ExceptionMessages.EMPTY_NAME)
-    private String name; //Наименование
+    private String name;
     @Size(max = 200, message = ExceptionMessages.MAX_DESCRIPTION)
-    private String description; //описание
-    private LocalDate releaseDate; //Релизная дата
+    private String description;
+    private LocalDate releaseDate;
     @PositiveOrZero(message = ExceptionMessages.POSITIVE_DURATION)
-    private int duration; //Длительность
-
+    private long duration;
+    @JsonIgnore
+    private final Set<Integer> likes = new HashSet<>();
 }
