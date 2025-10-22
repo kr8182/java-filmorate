@@ -1,19 +1,17 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.messages.LogMessages;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.user.UserService;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 @Slf4j
-@Validated
 public class UserController {
     private final UserService userService;
 
@@ -29,16 +27,14 @@ public class UserController {
 
 
     @PostMapping
-    @Valid
-    public User save(@RequestBody User user) {
+    public User save(@RequestBody @Valid User user) {
         log.debug(String.valueOf(LogMessages.TRY_ADD), user);
         return userService.save(user);
     }
 
 
     @PutMapping
-    @Valid
-    public User update(@RequestBody User user) {
+    public User update(@RequestBody @Valid User user) {
         log.debug(String.valueOf(LogMessages.TRY_UPDATE), user);
         return userService.update(user);
     }

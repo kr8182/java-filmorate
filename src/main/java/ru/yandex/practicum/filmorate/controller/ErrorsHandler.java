@@ -1,8 +1,10 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.ConstraintViolationException;
 import jdk.jshell.spi.ExecutionControl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,5 +36,30 @@ public class ErrorsHandler {
     public Map<String, String> handlerInternalException(final ExecutionControl.InternalException e) {
         log.info(String.valueOf(HandlerMessages.ERROR_500), e.getMessage());
         return Map.of(String.valueOf(HandlerMessages.SERVER_ERROR), e.getMessage());
+    }
+
+    // ДОБАВЬТЕ обработчик для ConstraintViolationException
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleConstraintViolationException(ConstraintViolationException e) {
+        log.info("Ошибка валидации: {}", e.getMessage());
+        // Можно извлечь более детальную информацию об ошибках
+        String errorMessage = e.getConstraintViolations().stream()
+                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                .findFirst()
+                .orElse("Ошибка валидации");
+        return Map.of("error", errorMessage);
+    }
+
+    // ДОБАВЬТЕ обработчик для MethodArgumentNotValidException (на случай валидации параметров)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.info("Ошибка валидации аргумента: {}", e.getMessage());
+        String errorMessage = e.getBindingResult().getFieldErrors().stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .findFirst()
+                .orElse("Ошибка валидации");
+        return Map.of("error", errorMessage);
     }
 }

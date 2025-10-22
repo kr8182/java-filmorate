@@ -1,19 +1,17 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.messages.LogMessages;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.film.FilmService;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/films")
 @Slf4j
-@Validated
 public class FilmController {
     private final FilmService filmService;
 
@@ -29,16 +27,14 @@ public class FilmController {
 
 
     @PostMapping
-    @Valid
-    public Film save(@RequestBody Film film) {
+    public Film save(@RequestBody @Valid Film film) {
         log.debug(String.valueOf(LogMessages.TRY_ADD), film);
         return filmService.save(film);
     }
 
 
     @PutMapping
-    @Valid
-    public Film update(@RequestBody Film film) {
+    public Film update(@RequestBody @Valid Film film) {
         log.debug(String.valueOf(LogMessages.TRY_UPDATE), film);
         return filmService.update(film);
     }
