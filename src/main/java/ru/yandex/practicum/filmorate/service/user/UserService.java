@@ -44,12 +44,13 @@ public class UserService extends AbstractService<User> {
     public User removeFriend(int userId, int friendId) {
         if (checkFriendToFriend(userId, friendId))
             throw new ValidationException(String.valueOf(ValidationExceptionMessages.FRIEND_TO_FRIEND));
+
         getById(userId);
         getById(friendId);
-        if (!storage.getById(userId).getFriends().contains(friendId) && !storage.getById(friendId).getFriends().contains(userId))
-            throw new ValidationException(String.valueOf(ValidationExceptionMessages.NOT_FRIENDS));
+
         storage.getById(userId).getFriends().remove(friendId);
         storage.getById(friendId).getFriends().remove(userId);
+
         log.info(String.valueOf(LogMessages.FRIEND_CANCEL), userId, friendId);
         return storage.getById(userId);
     }
