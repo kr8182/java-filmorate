@@ -15,14 +15,6 @@ public abstract class InMemoryStorage<T extends Entity> {
     private final Map<Integer, T> storage = new HashMap<>();
     private int id = 1;
 
-    private int generateId() {
-        return id++;
-    }
-
-    private void checkContainsKeys(int id) {
-        if (!storage.containsKey(id)) throw new NotFoundException(String.valueOf(LogMessages.MISSING));
-    }
-
     public List<T> getAll() {
         log.info(String.valueOf(LogMessages.COUNT), storage.size());
         return new ArrayList<>(storage.values());
@@ -56,5 +48,13 @@ public abstract class InMemoryStorage<T extends Entity> {
 
     public void clearAll() {
         storage.clear();
+    }
+
+    private void checkContainsKeys(int id) {
+        if (!storage.containsKey(id)) throw new NotFoundException(String.valueOf(LogMessages.MISSING));
+    }
+
+    private int generateId() {
+        return id++;
     }
 }
