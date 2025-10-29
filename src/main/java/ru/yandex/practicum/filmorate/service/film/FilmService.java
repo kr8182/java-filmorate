@@ -37,6 +37,7 @@ public class FilmService extends AbstractService<Film> {
 
     public Film addLike(int filmId, int userId) {
         getById(filmId);
+        storage.getById(userId);
         storage.getById(filmId).getLikes().add(userId);
         log.info(String.valueOf(LogMessages.LIKE_DONE), userId, filmId);
         return storage.getById(filmId);
