@@ -1,13 +1,16 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import jakarta.validation.ConstraintViolationException;
 import jdk.jshell.spi.ExecutionControl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
 import ru.yandex.practicum.filmorate.exceptions.ValidationException;
+import ru.yandex.practicum.filmorate.messages.HandlerMessages;
 
 import java.util.Map;
 
@@ -17,21 +20,46 @@ public class ErrorsHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handlerValidationException(final ValidationException e) {
-        log.info("Ошибка 400: {}", e.getMessage());
-        return Map.of("Ошибка валидации", e.getMessage());
+        log.info(String.valueOf(HandlerMessages.ERROR_400), e.getMessage());
+        return Map.of(String.valueOf(HandlerMessages.VALID), e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handlerNotFoundException(final NotFoundException e) {
-        log.info("Ошибка 404: {}", e.getMessage());
-        return Map.of("Не найден объект", e.getMessage());
+        log.info(String.valueOf(HandlerMessages.ERROR_404), e.getMessage());
+        return Map.of(String.valueOf(HandlerMessages.NOT_FOUND), e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handlerInternalException(final ExecutionControl.InternalException e) {
-        log.info("Ошибка 500: {}", e.getMessage());
-        return Map.of("Ошибка сервера", e.getMessage());
+        log.info(String.valueOf(HandlerMessages.ERROR_500), e.getMessage());
+        return Map.of(String.valueOf(HandlerMessages.SERVER_ERROR), e.getMessage());
+    }
+
+    // ДОБАВЬТЕ обработчик для ConstraintViolationException
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleConstraintViolationException(ConstraintViolationException e) {
+        log.info("Ошибка валидации: {}", e.getMessage());
+        // Можно извлечь более детальную информацию об ошибках
+        String errorMessage = e.getConstraintViolations().stream()
+                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                .findFirst()
+                .orElse("Ошибка валидации");
+        return Map.of("error", errorMessage);
+    }
+
+    // ДОБАВЬТЕ обработчик для MethodArgumentNotValidException (на случай валидации параметров)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.info("Ошибка валидации аргумента: {}", e.getMessage());
+        String errorMessage = e.getBindingResult().getFieldErrors().stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .findFirst()
+                .orElse("Ошибка валидации");
+        return Map.of("error", errorMessage);
     }
 }
